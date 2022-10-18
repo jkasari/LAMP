@@ -25,8 +25,14 @@ void setup() {
 }
 
 void loop() {
+    //uint32_t num = Butt1.hasBeenPressed();
+    //if (num > 0) {
+    //    Serial.println(num);
+    //}
+
     for (int i = 0; i < LED_NUM; ++i) {
         LEDArr[i] = Display.getColor(0, i);
     }
     FastLED.show();
+    delay(1);
 }
