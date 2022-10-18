@@ -34,19 +34,26 @@ enum class COMMAND {
   BOTH_PRESSED,
 };
 
+// Controls the two buttons and looks after mode and main brightness variables.
 class MainController {
 
   public:
+    // Takes two ports for buttons and the number of modes in the program
     MainController(uint8_t, uint8_t, uint8_t);
 
+    // Looks at the buttons and returns a command.
     COMMAND getCommand();
 
+    // Increase the main brightness by a certian amount.
     void incMainBrightness(int16_t);
 
+    // Returns the main brightness.
     uint8_t getMainBrightness();
 
+    // Moves one mode up, goes back to zero if the mode runs over the limit.
     void switchMode();
 
+    // Returns the mode number.
     uint8_t getMode();
 
   private:
