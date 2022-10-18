@@ -6,7 +6,7 @@
 #define BUTT_PIN1 9
 #define BUTT_PIN2 3
 #define LED_TYPE WS2811
-#define COLOR_ORDER RGB
+#define COLOR_ORDER GRB
 const uint8_t LEDnum = LED_NUM; // LED_NUM is defined in LAMPdisplays.h
 
 CRGB LEDArr[LED_NUM];
@@ -25,10 +25,14 @@ void setup() {
 }
 
 void loop() {
-    //uint32_t num = Butt1.hasBeenPressed();
-    //if (num > 0) {
-    //    Serial.println(num);
-    //}
+    if (Butt1.hasBeenPressed() > 0) {
+        GlobalBrightness += 10;
+        FastLED.setBrightness(GlobalBrightness);
+    }
+    if (Butt2.hasBeenPressed() > 0) {
+        GlobalBrightness -= 10;
+        FastLED.setBrightness(GlobalBrightness);
+    }
 
     for (int i = 0; i < LED_NUM; ++i) {
         LEDArr[i] = Display.getColor(0, i);
