@@ -1,4 +1,4 @@
-#define BUTTON_RESPONSE_TIME 200
+#define BUTTON_RESPONSE_TIME 50
 /**
  * The button class takes in a port number to read.
  * Call the check function in your loop to check if the button was pressed.
