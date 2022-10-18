@@ -1,4 +1,5 @@
 {
     "board": "arduino:avr:nano",
-    "port": "/dev/ttyUSB1"
+    "port": "/dev/ttyUSB1",
+    "sketch": "LAMP.ino"
 }
