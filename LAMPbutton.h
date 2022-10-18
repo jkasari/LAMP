@@ -6,16 +6,19 @@
 
 class Button {
 
-public:
-// Takes a port number to read
+  public:
+  // Takes a port number to read
   Button(uint8_t);
+
+  // Sets the button to input pull up
+  void begin();
 
   // Returns a count of how long the button was pressed for only after it's been pressed and released. 
   uint32_t hasBeenPressed();
 
-private:
-  uint32_t Count = 0;
-  uint8_t Port = 0;
-  // Increments the count while pressed. 
-  void countWhilePressed();
+  private:
+  uint32_t Count;
+  uint8_t Port;
+  // Returns true when the button is pressed and false when released.
+  bool isPressed();
 };
