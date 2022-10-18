@@ -13,11 +13,12 @@ CRGB LEDArr[LED_NUM];
 DisplayController Display;
 Button Butt1(BUTT_PIN1);
 Button Butt2(BUTT_PIN2);
+uint8_t GlobalBrightness = 255;
 
 void setup() {
     Serial.begin(115200);
     FastLED.addLeds<LED_TYPE, LED_PIN, COLOR_ORDER>(LEDArr, LEDnum);
-    FastLED.setBrightness(255);
+    FastLED.setBrightness(GlobalBrightness);
     FastLED.clear();
     Butt1.begin();
     Butt2.begin();
