@@ -48,5 +48,7 @@ class DisplayController {
     private:
         SolidLightDisplay SolidLight[LED_NUM];
         SolidLightDisplayRed SolidRed[LED_NUM];
+        uint32_t Timer = 0;
+        uint32_t Rate = 1000;
 
 };

@@ -31,11 +31,18 @@ MainController::MainController(uint8_t port1, uint8_t port2, uint8_t NumOfModes)
 
 COMMAND MainController::getCommand() {
     COMMAND CMND = COMMAND::DO_NOTHING;
-    if (millis() - Timer > Rate) {
-        Timer = millis();
+    if (millis() - TimerBrightness > RateBrightness) {
+        TimerBrightness = millis();
         if (Butt1.isPressed()) { CMND = COMMAND::ONE_PRESSED; }
         if (Butt2.isPressed()) { CMND = COMMAND::TWO_PRESSED; }
-        if (Butt1.isPressed() && Butt2.isPressed()) { CMND = COMMAND::BOTH_PRESSED; }
+        if (Butt1.isPressed() && Butt2.isPressed()) {
+            if (millis() - TimerMode > RateMode) {
+                TimerMode = millis();
+                CMND = COMMAND::BOTH_PRESSED;
+            } else {
+                CMND = COMMAND::DO_NOTHING;
+            }
+        }
     }
     return CMND;
 }

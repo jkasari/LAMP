@@ -1,4 +1,5 @@
-#define BUTTON_RESPONSE_TIME 50
+#define BUTTON_RESPONSE_TIME_B 50
+#define BUTTON_RESPONSE_TIME_M 1000
 #define BRIGHTNESS_LOW_LIMIT 15
 /**
  * The button class takes in a port number to read.
@@ -51,9 +52,11 @@ class MainController {
   private:
     Button Butt1;
     Button Butt2;
-    uint32_t Timer;
+    uint32_t TimerMode;
+    uint32_t TimerBrightness;
     uint8_t Brightness = 255;
     uint8_t Mode = 0;
     uint8_t NumOfModes;
-    const uint32_t Rate = BUTTON_RESPONSE_TIME;
+    const uint32_t RateBrightness = BUTTON_RESPONSE_TIME_B;
+    const uint32_t RateMode = BUTTON_RESPONSE_TIME_M;
 };
