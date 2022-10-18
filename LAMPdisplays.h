@@ -24,6 +24,8 @@ class SolidLightDisplay : public LightDisplayParent {
         CRGB getColor();
 
     private:
+        const uint8_t SATURATION = 200;
+        const uint8_t COLOR = 69;
 };
 
 class DisplayController {

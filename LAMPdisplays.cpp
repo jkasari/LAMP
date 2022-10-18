@@ -10,7 +10,8 @@ DisplayController::DisplayController() {
 
 CRGB SolidLightDisplay::getColor() {
     setBrightness(150);
-    return CRGB(getBrightness(), getBrightness(), getBrightness());
+    CRGB color = CHSV(COLOR, SATURATION, getBrightness());
+    return color;
 }
 
 CRGB DisplayController::getColor(uint8_t displayIndex, uint8_t LEDindex) {
