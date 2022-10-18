@@ -9,10 +9,11 @@
 #define COLOR_ORDER GRB
 #define BRIGHTNESS_INC 5
 const uint8_t LEDnum = LED_NUM; // LED_NUM is defined in LAMPdisplays.h
+const uint8_t numberOfDisplays = DISPLAY_NUM; // Display num is defined in LAMPdisplays.h
 
 CRGB LEDArr[LED_NUM];
 DisplayController Display;
-ButtonController Controller(BUTT_PIN1, BUTT_PIN2);
+MainController Controller(BUTT_PIN1, BUTT_PIN2, numberOfDisplays);
 uint8_t GlobalBrightness = 255;
 
 void setup() {
@@ -25,10 +26,10 @@ void setup() {
 void loop() {
     switch (Controller.getCommand()) {
         case COMMAND::ONE_PRESSED:
-            GlobalBrightness += BRIGHTNESS_INC;
+            Controller.incMainBrightness(BRIGHTNESS_INC);
             break;
         case COMMAND::TWO_PRESSED:
-            GlobalBrightness -= BRIGHTNESS_INC;
+            Controller.incMainBrightness(-BRIGHTNESS_INC);
             break;
         case COMMAND::BOTH_PRESSED:
             break;
@@ -38,7 +39,7 @@ void loop() {
     for (int i = 0; i < LED_NUM; ++i) {
         LEDArr[i] = Display.getColor(0, i);
     }
-    FastLED.setBrightness(GlobalBrightness);
+    FastLED.setBrightness(Controller.getMainBrightness());
     FastLED.show();
     delay(1);
 }

@@ -1,6 +1,8 @@
 #include <FastLED.h>
 #define DISPLAY_NUM 1
 #define LED_NUM 42
+#define MAIN_COLOR 69
+#define MAIN_SATURATION 180
 
 class LightDisplayParent {
 
@@ -24,19 +26,16 @@ class SolidLightDisplay : public LightDisplayParent {
         CRGB getColor();
 
     private:
-        const uint8_t SATURATION = 200;
-        const uint8_t COLOR = 69;
+        const uint8_t SATURATION = MAIN_SATURATION;
+        const uint8_t COLOR = MAIN_COLOR;
 };
 
 class DisplayController {
 
     public:
-        DisplayController();
-
         CRGB getColor(uint8_t, uint8_t);
 
     private:
-        LightDisplayParent *DisplayPointer;
         SolidLightDisplay SolidLight[LED_NUM];
 
 };

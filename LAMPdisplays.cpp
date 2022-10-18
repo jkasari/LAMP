@@ -4,9 +4,6 @@ void LightDisplayParent::setBrightness(uint8_t newValue) { Brightness = newValue
 
 uint8_t LightDisplayParent::getBrightness() { return Brightness; }
 
-DisplayController::DisplayController() {
-    DisplayPointer = SolidLight;
-}
 
 CRGB SolidLightDisplay::getColor() {
     setBrightness(100);
@@ -15,5 +12,14 @@ CRGB SolidLightDisplay::getColor() {
 }
 
 CRGB DisplayController::getColor(uint8_t displayIndex, uint8_t LEDindex) {
-    return SolidLight[LEDindex].getColor();
+    CRGB color;
+    switch (displayIndex) {
+        case 0:
+            color = SolidLight[LEDindex].getColor();
+            break;
+        default:
+            color = CRGB(0, 0, 0);
+            break;
+    }
+    return color;
 }
