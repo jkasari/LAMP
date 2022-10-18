@@ -1,4 +1,6 @@
-#define BUTTON_RESPONSE_TIME 200
+#define BUTTON_RESPONSE_TIME_B 50
+#define BUTTON_RESPONSE_TIME_M 1000
+#define BRIGHTNESS_LOW_LIMIT 15
 /**
  * The button class takes in a port number to read.
  * Call the check function in your loop to check if the button was pressed.
@@ -32,16 +34,29 @@ enum class COMMAND {
   BOTH_PRESSED,
 };
 
-class ButtonController {
+class MainController {
 
   public:
-    ButtonController(uint8_t, uint8_t);
+    MainController(uint8_t, uint8_t, uint8_t);
 
     COMMAND getCommand();
+
+    void incMainBrightness(int16_t);
+
+    uint8_t getMainBrightness();
+
+    void switchMode();
+
+    uint8_t getMode();
 
   private:
     Button Butt1;
     Button Butt2;
-    uint32_t Timer;
-    const uint32_t Rate = BUTTON_RESPONSE_TIME;
+    uint32_t TimerMode;
+    uint32_t TimerBrightness;
+    uint8_t Brightness = 255;
+    uint8_t Mode = 0;
+    uint8_t NumOfModes;
+    const uint32_t RateBrightness = BUTTON_RESPONSE_TIME_B;
+    const uint32_t RateMode = BUTTON_RESPONSE_TIME_M;
 };
