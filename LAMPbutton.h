@@ -16,6 +16,6 @@ public:
 private:
   uint32_t Count = 0;
   uint8_t Port = 0;
-  // Increments the count while pressed. 
-  void countWhilePressed();
+  // Returns true when the button is pressed and false when released.
+  bool isPressed();
 };
