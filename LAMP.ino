@@ -32,12 +32,14 @@ void loop() {
             Controller.incMainBrightness(-BRIGHTNESS_INC);
             break;
         case COMMAND::BOTH_PRESSED:
+            Controller.switchMode();
             break;
         case COMMAND::DO_NOTHING:
             break;
     }
+    uint8_t mode = Controller.getMode();
     for (int i = 0; i < LED_NUM; ++i) {
-        LEDArr[i] = Display.getColor(0, i);
+        LEDArr[i] = Display.getColor(mode, i);
     }
     FastLED.setBrightness(Controller.getMainBrightness());
     FastLED.show();

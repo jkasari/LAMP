@@ -20,6 +20,16 @@ class LightDisplayParent {
         uint32_t Counter;
 };
 
+class SolidLightDisplayRed : public LightDisplayParent {
+
+    public:
+        CRGB getColor();
+
+    private:
+        const uint8_t SATURATION = 255;
+        const uint8_t COLOR = 0;
+};
+
 class SolidLightDisplay : public LightDisplayParent {
 
     public:
@@ -37,5 +47,6 @@ class DisplayController {
 
     private:
         SolidLightDisplay SolidLight[LED_NUM];
+        SolidLightDisplayRed SolidRed[LED_NUM];
 
 };

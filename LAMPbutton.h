@@ -44,6 +44,10 @@ class MainController {
 
     uint8_t getMainBrightness();
 
+    void switchMode();
+
+    uint8_t getMode();
+
   private:
     Button Butt1;
     Button Butt2;

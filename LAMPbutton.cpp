@@ -54,3 +54,16 @@ void MainController::incMainBrightness(int16_t inc) {
 uint8_t MainController::getMainBrightness() {
     return Brightness;
 }
+
+void MainController::switchMode() {
+    int8_t test = Mode + 1;
+    if (test > NumOfModes) {
+        Mode = 0;
+    } else {
+        Mode = test;
+    }
+}
+
+uint8_t MainController::getMode() {
+    return Mode;
+}
