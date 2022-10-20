@@ -33,7 +33,7 @@ class SolidLightDisplay : public LightDisplayParent {
     private:
         DisplayVariables resetVariables(DisplayVariables);
 
-        uint8_t raiseToFull(uint8_t);
+        uint8_t bringTo(uint8_t, uint8_t);
 };
 
 class RandomDotDisplay : public LightDisplayParent {

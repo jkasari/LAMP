@@ -14,17 +14,19 @@ DisplayVariables SolidLightDisplay::resetVariables(DisplayVariables vars) {
     vars.lowLimit = 0;
     if (millis() - vars.time > vars.rate) {
         vars.time = millis();
-        vars.brightness = raiseToFull(vars.brightness);
-        vars.red = raiseToFull(vars.red);
-        vars.green = raiseToFull(vars.green);
-        vars.blue = raiseToFull(vars.blue);
+        vars.brightness = bringTo(vars.brightness, 255);
+        vars.red = bringTo(vars.red, 255);
+        vars.green = bringTo(vars.green, 255);
+        vars.blue = bringTo(vars.blue, 100);
     }
     return vars;
 }
 
-uint8_t SolidLightDisplay::raiseToFull(uint8_t val) {
-    if (val < 255) {
+uint8_t SolidLightDisplay::bringTo(uint8_t val, uint8_t lim) {
+    if (val < lim) {
         val++;
+    } else if (lim < val) {
+        val--;
     }
     return val;
 }
