@@ -1,11 +1,32 @@
 #include "LAMPdisplays.h"
 
 CRGB SolidLightDisplay::getColor(CRGB led, DisplayVariables &vars) {
-    uint8_t b = 150;
-    led.red = b;
-    led.green = b;
-    led.blue = b;
+    vars = resetVariables(vars);
+    led.r = vars.brightness * vars.red / 255;
+    led.g = vars.brightness * vars.green / 255;
+    led.b = vars.brightness * vars.blue / 255;
     return led;
+}
+
+DisplayVariables SolidLightDisplay::resetVariables(DisplayVariables vars) {
+    vars.rate = 5;
+    vars.highLimit = 255;
+    vars.lowLimit = 0;
+    if (millis() - vars.time > vars.rate) {
+        vars.time = millis();
+        vars.brightness = raiseToFull(vars.brightness);
+        vars.red = raiseToFull(vars.red);
+        vars.green = raiseToFull(vars.green);
+        vars.blue = raiseToFull(vars.blue);
+    }
+    return vars;
+}
+
+uint8_t SolidLightDisplay::raiseToFull(uint8_t val) {
+    if (val < 255) {
+        val++;
+    }
+    return val;
 }
 
 CRGB RandomDotDisplay::getColor(CRGB led, DisplayVariables &vars) {
@@ -22,8 +43,8 @@ CRGB RandomDotDisplay::getColor(CRGB led, DisplayVariables &vars) {
         }
     }
     led.r = vars.brightness * vars.red / 255;
-    led.b = vars.brightness * vars.green / 255;
-    led.g = vars.brightness * vars.blue / 255;
+    led.g = vars.brightness * vars.green / 255;
+    led.b = vars.brightness * vars.blue / 255;
     return led;
 }
 
@@ -39,6 +60,37 @@ DisplayVariables RandomDotDisplay::randomizeVariables(DisplayVariables vars) {
     return vars;
 }
 
+CRGB FireDisplay::getColor(CRGB led, DisplayVariables &vars) {
+    if (millis() - vars.time > vars.rate) {
+        vars.time = millis();
+        int16_t temp = vars.brightness + vars.direction;
+        if (temp > vars.highLimit) {
+            vars.direction = -1;
+            temp = vars.highLimit;
+        } else if (0 > temp) {
+            vars = randomizeVariables(vars);
+        } else {
+            vars.brightness = temp;
+        }
+    }
+    led.r = vars.brightness * vars.red / 255;
+    led.g = vars.brightness * vars.green / 255;
+    led.b = vars.brightness * vars.blue / 255;
+    return led;
+}
+
+DisplayVariables FireDisplay::randomizeVariables(DisplayVariables vars) {
+    vars.direction = 1;
+    vars.rate = random8(1, 5);
+    vars.brightness = 0;
+    vars.highLimit = random(40, 255);
+    vars.lowLimit = random(5, 20);
+    vars.red = random8(150, 255);
+    vars.green = random8(10, 30);
+    vars.blue = random(10);
+    return vars;
+}
+
 CRGB DisplayController::getColor(uint8_t display, uint8_t index, CRGB led) {
     CRGB color = 0x000000;
     switch (display) {
@@ -47,6 +99,10 @@ CRGB DisplayController::getColor(uint8_t display, uint8_t index, CRGB led) {
         break;
     case 1:
         color = RandomDot.getColor(led, Variables[index]);
+        break;
+    case 2:
+        color = Fire.getColor(led, Variables[index]);
+        break;
     default:
         break;
     }

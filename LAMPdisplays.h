@@ -1,5 +1,5 @@
 #include <FastLED.h>
-#define DISPLAY_NUM 1
+#define DISPLAY_NUM 3
 #define LED_NUM 42
 #define MAIN_COLOR 69
 #define MAIN_SATURATION 180
@@ -31,6 +31,9 @@ class SolidLightDisplay : public LightDisplayParent {
     public:
         CRGB getColor(CRGB, DisplayVariables&);
     private:
+        DisplayVariables resetVariables(DisplayVariables);
+
+        uint8_t raiseToFull(uint8_t);
 };
 
 class RandomDotDisplay : public LightDisplayParent {
@@ -41,6 +44,15 @@ class RandomDotDisplay : public LightDisplayParent {
     private:
         DisplayVariables randomizeVariables(DisplayVariables);
 
+};
+
+class FireDisplay : public LightDisplayParent {
+
+    public:
+        CRGB getColor(CRGB, DisplayVariables&);
+
+    private:
+        DisplayVariables randomizeVariables(DisplayVariables);
 };
 
 
@@ -55,4 +67,5 @@ class DisplayController {
         DisplayVariables Variables[LED_NUM];
         SolidLightDisplay SolidLight;
         RandomDotDisplay RandomDot;
+        FireDisplay Fire;
 };
