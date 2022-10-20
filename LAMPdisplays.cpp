@@ -1,59 +1,54 @@
 #include "LAMPdisplays.h"
 
-CRGB SolidLightDisplayRed::getColor() {
-    Brightness = 100;
-    CRGB color = CHSV(COLOR, SATURATION, Brightness);
-    return color;
+CRGB SolidLightDisplay::getColor(CRGB led, DisplayVariables &vars) {
+    uint8_t b = 150;
+    led.red = b;
+    led.green = b;
+    led.blue = b;
+    return led;
 }
 
-CRGB SolidLightDisplay::getColor() {
-    Brightness = 255;
-    CRGB color = CHSV(COLOR, SATURATION, Brightness);
-    return color;
-}
-
-RandomColor::RandomColor() {
-    resetValues();
-}
-
-CRGB RandomColor::getColor() {
-    if (millis() - Counter > Rate) {
-        Counter = millis();
-        int16_t test = Brightness + Dir;
-        if (test >= HighLimit) {
-            Dir = -1;
-            Brightness = HighLimit;
-        } else if (0 >= test) {
-            resetValues();
+CRGB RandomDotDisplay::getColor(CRGB led, DisplayVariables &vars) {
+    if (millis() - vars.time > vars.rate) {
+        vars.time = millis();
+        int16_t temp = vars.brightness + vars.direction;
+        if (temp > vars.highLimit) {
+            vars.direction = -1;
+            temp = vars.highLimit;
+        } else if (0 > temp) {
+            vars = randomizeVariables(vars);
         } else {
-            Brightness = test;
+            vars.brightness = temp;
         }
     }
-   CRGB color = CHSV(Color, Sat, Brightness);
-   return color;
+    led.r = vars.brightness * vars.red / 255;
+    led.b = vars.brightness * vars.green / 255;
+    led.g = vars.brightness * vars.blue / 255;
+    return led;
 }
 
-void RandomColor::resetValues() {
-    Brightness = 0;
-    Dir = 1;
-    Color = random8();
-    HighLimit = random8(50);
-    Counter = 0;
-    Rate = random8(20, 90);
+DisplayVariables RandomDotDisplay::randomizeVariables(DisplayVariables vars) {
+    vars.direction = 1;
+    vars.rate = random8(5, 15);
+    vars.brightness = 0;
+    vars.highLimit = random(100, 255);
+    vars.lowLimit = random(10, 50);
+    vars.red = random8();
+    vars.green = random8();
+    vars.blue = random8();
+    return vars;
 }
 
-CRGB DisplayController::getColor(uint8_t displayIndex, uint8_t LEDindex) {
-    CRGB color;
-    switch (displayIndex) {
-        case 0:
-            color = SolidLight[LEDindex].getColor();
-            break;
-        case 1:
-            color = RandColor[LEDindex].getColor();
-            break;
-        default:
-            color = CRGB(0, 0, 0);
-            break;
+CRGB DisplayController::getColor(uint8_t display, uint8_t index, CRGB led) {
+    CRGB color = 0x000000;
+    switch (display) {
+    case 0:
+        color = SolidLight.getColor(led, Variables[index]);
+        break;
+    case 1:
+        color = RandomDot.getColor(led, Variables[index]);
+    default:
+        break;
     }
     return color;
 }
