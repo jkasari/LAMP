@@ -56,7 +56,7 @@ CRGB RandomDotDisplay::getColor(CRGB led, DisplayVariables &vars) {
 DisplayVariables RandomDotDisplay::randomizeVariables(DisplayVariables vars) {
     vars.direction = 1;
     vars.rate = random(5, 15);
-    vars.offTime = random(1000, 10000);
+    vars.offTime = random(5000, 10000);
     vars.brightness = 0;
     vars.highLimit = random(100, 255);
     vars.lowLimit = random(10, 50);
