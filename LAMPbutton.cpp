@@ -63,11 +63,10 @@ uint8_t MainController::getMainBrightness() {
 }
 
 void MainController::switchMode() {
-    int8_t test = Mode + 1;
-    if (test >= NumOfModes) {
-        Mode = 0;
+    if (Mode == 0) {
+        Mode = random(1, NumOfModes);
     } else {
-        Mode = test;
+        Mode = 0;
     }
 }
 
