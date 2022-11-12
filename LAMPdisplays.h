@@ -7,14 +7,18 @@
 
 struct DisplayVariables {
     uint32_t rate = 30;
-    uint32_t direction = 1;
-    uint8_t brightness = 0;
     uint32_t time = 0;
+    uint32_t offTime = 0;
+    uint32_t offCounter = 0;
+    
+    uint8_t brightness = 0;
     uint8_t highLimit = 5;
     uint8_t lowLimit = 0;
     uint8_t red = 0;
     uint8_t green = 0;
     uint8_t blue = 0;
+    
+    int8_t direction = 1;
 };
 
 // A parent class for each light display, in the future the light displays will be help in an array of this class.

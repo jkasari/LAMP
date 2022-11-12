@@ -38,8 +38,11 @@ CRGB RandomDotDisplay::getColor(CRGB led, DisplayVariables &vars) {
         if (temp > vars.highLimit) {
             vars.direction = -1;
             temp = vars.highLimit;
+            vars.offCounter = millis();
         } else if (0 > temp) {
-            vars = randomizeVariables(vars);
+            if (millis() - vars.offCounter > vars.offTime) {
+                vars = randomizeVariables(vars);
+            }
         } else {
             vars.brightness = temp;
         }
@@ -53,6 +56,7 @@ CRGB RandomDotDisplay::getColor(CRGB led, DisplayVariables &vars) {
 DisplayVariables RandomDotDisplay::randomizeVariables(DisplayVariables vars) {
     vars.direction = 1;
     vars.rate = random8(5, 15);
+    vars.offTime = random(1000, 10000);
     vars.brightness = 0;
     vars.highLimit = random(100, 255);
     vars.lowLimit = random(10, 50);
