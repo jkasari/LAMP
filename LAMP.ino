@@ -21,6 +21,7 @@ void setup() {
     FastLED.addLeds<LED_TYPE, LED_PIN, COLOR_ORDER>(LEDArr, LEDnum);
     FastLED.setBrightness(GlobalBrightness);
     FastLED.clear();
+    randomSeed(analogRead(A0));
 }
 
 void loop() {

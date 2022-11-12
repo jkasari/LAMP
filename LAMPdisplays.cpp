@@ -55,14 +55,14 @@ CRGB RandomDotDisplay::getColor(CRGB led, DisplayVariables &vars) {
 
 DisplayVariables RandomDotDisplay::randomizeVariables(DisplayVariables vars) {
     vars.direction = 1;
-    vars.rate = random8(5, 15);
+    vars.rate = random(5, 15);
     vars.offTime = random(1000, 10000);
     vars.brightness = 0;
     vars.highLimit = random(100, 255);
     vars.lowLimit = random(10, 50);
-    vars.red = random8();
-    vars.green = random8();
-    vars.blue = random8();
+    vars.red = random();
+    vars.green = random();
+    vars.blue = random();
     return vars;
 }
 
@@ -87,13 +87,13 @@ CRGB FireDisplay::getColor(CRGB led, DisplayVariables &vars) {
 
 DisplayVariables FireDisplay::randomizeVariables(DisplayVariables vars) {
     vars.direction = 1;
-    vars.rate = random8(1, 5);
+    vars.rate = random(1, 4);
     vars.brightness = 0;
     vars.highLimit = random(40, 255);
     vars.lowLimit = random(5, 20);
-    vars.red = random8(150, 255);
-    vars.green = random8(10, 30);
-    vars.blue = random(10);
+    vars.red = random(150, 255);
+    vars.green = random(10, 30);
+    vars.blue = random(0);
     return vars;
 }
 
