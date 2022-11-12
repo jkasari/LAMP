@@ -60,9 +60,9 @@ DisplayVariables RandomDotDisplay::randomizeVariables(DisplayVariables vars) {
     vars.brightness = 0;
     vars.highLimit = random(100, 255);
     vars.lowLimit = random(10, 50);
-    vars.red = random();
-    vars.green = random();
-    vars.blue = random();
+    vars.red = random(255);
+    vars.green = random(255);
+    vars.blue = random(255);
     return vars;
 }
 
