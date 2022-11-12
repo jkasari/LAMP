@@ -39,7 +39,7 @@ void loop() {
     }
     uint8_t mode = Controller.getMode();
     for (int i = 0; i < LED_NUM; ++i) { // loop through all the CRGB objects and pair them with specific color from a display object.
-        LEDArr[i] = Display.getColor(mode, i);
+        LEDArr[i] = Display.getColor(mode, i, LEDArr[i]);
     }
     // Keep Fast led happy and running
     FastLED.setBrightness(Controller.getMainBrightness());
