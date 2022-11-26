@@ -11,7 +11,7 @@ CRGB SolidLightDisplay::getColor(CRGB led, DisplayVariables &vars) {
 DisplayVariables SolidLightDisplay::resetVariables(DisplayVariables vars) {
     vars.rate = 5;
     vars.highLimit = 255;
-    vars.lowLimit = 0;
+    vars.lowLimit = 10;
     if (millis() - vars.time > vars.rate) {
         vars.time = millis();
         vars.brightness = bringTo(vars.brightness, 255);
@@ -22,10 +22,10 @@ DisplayVariables SolidLightDisplay::resetVariables(DisplayVariables vars) {
     return vars;
 }
 
-uint8_t SolidLightDisplay::bringTo(uint8_t val, uint8_t lim) {
-    if (val < lim) {
+uint8_t SolidLightDisplay::bringTo(uint8_t val, uint8_t targ) {
+    if (val < targ) { // If the value is less then the desired target, increase it.
         val++;
-    } else if (lim < val) {
+    } else if (targ < val) { // If it's greater, decrease it. 
         val--;
     }
     return val;
