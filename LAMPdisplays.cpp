@@ -1,7 +1,7 @@
 #include "LAMPdisplays.h"
 
 CRGB SolidLightDisplay::getColor(CRGB led, DisplayVariables &vars) {
-    vars = resetVariables(vars);
+    vars = resetVariables(vars); 
     led.r = vars.brightness * vars.red / 255;
     led.g = vars.brightness * vars.green / 255;
     led.b = vars.brightness * vars.blue / 255;
@@ -12,10 +12,10 @@ DisplayVariables SolidLightDisplay::resetVariables(DisplayVariables vars) {
     vars.rate = 5;
     vars.highLimit = 255;
     vars.lowLimit = 10;
-    if (millis() - vars.time > vars.rate) {
-        vars.time = millis();
-        vars.brightness = bringTo(vars.brightness, 255);
-        vars.red = bringTo(vars.red, 255);
+    if (millis() - vars.time > vars.rate) { // Check the time to see if it's time to increment the variables toward the same color
+        vars.time = millis(); // Reset timer
+        vars.brightness = bringTo(vars.brightness, 255); // Bring brightness back to full
+        vars.red = bringTo(vars.red, 255); // Bring the rgb variables back to a nice white light.
         vars.green = bringTo(vars.green, 255);
         vars.blue = bringTo(vars.blue, 100);
     }
@@ -32,22 +32,22 @@ uint8_t SolidLightDisplay::bringTo(uint8_t val, uint8_t targ) {
 }
 
 CRGB RandomDotDisplay::getColor(CRGB led, DisplayVariables &vars) {
-    if (millis() - vars.time > vars.rate) {
+    if (millis() - vars.time > vars.rate) { // Check the time to make sure it's go time.
         vars.time = millis();
-        int16_t temp = vars.brightness + vars.direction;
-        if (temp > vars.highLimit) {
-            vars.direction = -1;
-            temp = vars.highLimit;
-            vars.offCounter = millis();
+        int16_t temp = vars.brightness + vars.direction; // create a temp variable, use a signed 16bit int to avoid looping back around over 255.
+        if (temp > vars.highLimit) { // If the variable is greater then the high limit.
+            vars.direction = -1; // Set the direction to decrease
+            temp = vars.highLimit; // Set the temp variable to the high limit
+            vars.offCounter = millis(); // Start the off counter
         } else if (0 > temp) {
-            if (millis() - vars.offCounter > vars.offTime) {
+            if (millis() - vars.offCounter > vars.offTime) { // Keep the light off for a random amount of time. 
                 vars = randomizeVariables(vars);
             }
         } else {
-            vars.brightness = temp;
+            vars.brightness = temp; // If nothing is going on, set the brightness variable equal to the temp variable.
         }
     }
-    led.r = vars.brightness * vars.red / 255;
+    led.r = vars.brightness * vars.red / 255; // Set the leds to the proper rgb values.
     led.g = vars.brightness * vars.green / 255;
     led.b = vars.brightness * vars.blue / 255;
     return led;

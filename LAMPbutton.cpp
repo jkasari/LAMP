@@ -10,13 +10,13 @@ void Button::begin() {
 uint32_t Button::hasBeenPressed() {
     uint32_t value = 0;
     if (isPressed()) {
-        Count++;
+        Count++; // Increase the count if the button is pressed.
     }
     if (!isPressed() && Count > 0) {
-        value = Count;
-        Count = 0;
+        value = Count; // Set the value to the count if the button is not pressed.
+        Count = 0; // Reset the count once the value has been saved.
     }
-    return value;
+    return value; // Return the time pressed.
 }
 
 bool Button::isPressed() {
@@ -31,12 +31,12 @@ MainController::MainController(uint8_t port1, uint8_t port2, uint8_t NumOfModes)
 
 COMMAND MainController::getCommand() {
     COMMAND CMND = COMMAND::DO_NOTHING;
-    if (millis() - TimerBrightness > RateBrightness) {
+    if (millis() - TimerBrightness > RateBrightness) { // Slight delay here to make the buttons less touchy
         TimerBrightness = millis();
         if (Butt1.isPressed()) { CMND = COMMAND::ONE_PRESSED; }
         if (Butt2.isPressed()) { CMND = COMMAND::TWO_PRESSED; }
-        if (Butt1.isPressed() && Butt2.isPressed()) {
-            if (millis() - TimerMode > RateMode) {
+        if (Butt1.isPressed() && Butt2.isPressed()) { 
+            if (millis() - TimerMode > RateMode) { // Check to see if both buttons are pressed and then wait for a bit before responding. 
                 TimerMode = millis();
                 CMND = COMMAND::BOTH_PRESSED;
             } else {
@@ -44,18 +44,18 @@ COMMAND MainController::getCommand() {
             }
         }
     }
-    return CMND;
+    return CMND; // Return the command.
 }
 
 void MainController::incMainBrightness(int16_t inc) {
-    int16_t test = Brightness + inc;
-    Brightness = test;
+    int16_t test = Brightness + inc; // Create a test variable to make sure the new brightnes is not greater or less then 0-255
     if (test > 255) {
-        Brightness = 255;
+        test = 255;
     }
-    if (BRIGHTNESS_LOW_LIMIT > test) {
-        Brightness = BRIGHTNESS_LOW_LIMIT;
+    if (BRIGHTNESS_LOW_LIMIT > test) { 
+        test = BRIGHTNESS_LOW_LIMIT;
     }
+    Brightness = test;
 }
 
 uint8_t MainController::getMainBrightness() {
