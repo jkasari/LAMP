@@ -55,7 +55,7 @@ void MainController::incMainBrightness(int16_t inc) {
     if (BRIGHTNESS_LOW_LIMIT > test) { 
         test = BRIGHTNESS_LOW_LIMIT;
     }
-    Brightness = test;
+    Brightness = test; // Set the master brightness to the test variable.
 }
 
 uint8_t MainController::getMainBrightness() {
@@ -63,9 +63,9 @@ uint8_t MainController::getMainBrightness() {
 }
 
 void MainController::switchMode() {
-    if (Mode == 0) {
+    if (Mode == 0) { // If the mode is on the solid light mode, change it to a random mode.
         Mode = random(1, NumOfModes);
-    } else {
+    } else { // If its not in the solid light mode, put it in the solid light mode. 
         Mode = 0;
     }
 }
